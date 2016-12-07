@@ -3,6 +3,7 @@
 one:
   name: Tommy
   email: t@gmail.com
+  password_digest: foo
 
 two:
   name: Timmy
