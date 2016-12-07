@@ -93,4 +93,40 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 204
   end
+
+  test "should login user" do
+    params = {
+      email: "t@gmail.com",
+      password: "password"
+    }
+
+    post '/users/login', params.to_json, headers
+
+    response_body_json = JSON.parse response.body
+
+    assert_equal "foo", response_body_json["access_token"]
+    assert_response 200
+  end
+
+  test "should not authorize user outside db" do
+    params = {
+      email: "ao@gmail.com",
+      password: "password"
+    }
+
+    post '/users/login', params.to_json, headers
+
+    assert_response 401
+  end
+
+  test "should not authorize user with wrong password" do
+    params = {
+      email: "ao@gmail.com",
+      password: "foo"
+    }
+
+    post '/users/login', params.to_json, headers
+
+    assert_response 401
+  end
 end

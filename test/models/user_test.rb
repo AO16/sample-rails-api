@@ -26,4 +26,18 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(name: "Andy", email: "ao@gmail.com", password: "foo")
     assert user.valid?
   end
+
+  test "user generates api_key on creation" do
+    user = User.new(name: "Andy", email: "ao@gmail.com", password: "foo")
+    user.save
+
+    assert_not_empty user.api_key
+  end
+
+  test "user authenticates with given password" do
+    user = User.new(name: "Andy", email: "ao@gmail.com", password: "foo")
+    user.save
+
+    assert user.authenticate("foo")
+  end
 end
