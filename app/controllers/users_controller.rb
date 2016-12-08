@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def login
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:username])
 
     return not_authorized unless user
 
@@ -8,6 +8,6 @@ class UsersController < ApplicationController
 
     return not_authorized unless authenticated
 
-    render json: { access_token: user.api_key }
+    render json: { access_token: user.api_key, user_id: user.id }
   end
 end
