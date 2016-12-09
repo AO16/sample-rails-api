@@ -7,7 +7,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   }
 
   test "should get index" do
-    get users_url, {}, headers
+    get api_users_url, {}, headers
 
     assert_response :success
   end
@@ -25,7 +25,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         }
       }
 
-      post users_url, params.to_json, headers
+      post api_users_url, params.to_json, headers
     end
 
     assert_response 201
@@ -35,10 +35,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     params = {
       data: {
         type: "users",
-        attributes: { email: "", name: "" }
+        attributes: {
+          email: "",
+          name: ""
+        }
       }
     }
-    post users_url, params.to_json, headers
+    post api_users_url, params.to_json, headers
 
     assert_response 422
   end
@@ -49,10 +52,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     params = {
       data: {
         type: "users",
-        attributes: { email: user.email, name: user.name }
+        attributes: {
+          email: user.email,
+          name: user.name
+        }
       }
     }
-    post users_url, params.to_json, headers
+    post api_users_url, params.to_json, headers
 
     assert_response 422
   end
@@ -60,73 +66,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should show user" do
     user = users(:one)
 
-    get user_url(user), {}, headers
+    get api_user_url(user), {}, headers
 
     assert_response :success
-  end
-
-  test "should update user" do
-    user = users(:one)
-
-    params = {
-      data: {
-        id: user.id,
-        type: "users",
-        attributes: {
-          email: "new@gmail.com",
-          name: "Fred"
-        }
-      }
-    }
-
-    patch user_url(user), params.to_json, headers
-
-    assert_response 200
   end
 
   test "should destroy user" do
     user = users(:one)
 
     assert_difference('User.count', -1) do
-      delete user_url(user), {}, headers
+      delete api_user_url(user), {}, headers
     end
 
     assert_response 204
-  end
-
-  test "should login user" do
-    params = {
-      email: "t@gmail.com",
-      password: "password"
-    }
-
-    post '/users/login', params.to_json, headers
-
-    response_body_json = JSON.parse response.body
-
-    assert_equal "foo", response_body_json["access_token"]
-    assert_response 200
-  end
-
-  test "should not authorize user outside db" do
-    params = {
-      email: "ao@gmail.com",
-      password: "password"
-    }
-
-    post '/users/login', params.to_json, headers
-
-    assert_response 401
-  end
-
-  test "should not authorize user with wrong password" do
-    params = {
-      email: "ao@gmail.com",
-      password: "foo"
-    }
-
-    post '/users/login', params.to_json, headers
-
-    assert_response 401
   end
 end

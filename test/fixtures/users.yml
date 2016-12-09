@@ -3,8 +3,6 @@
 one:
   name: Tommy
   email: t@gmail.com
-  password_digest: $2a$10$znFHJTc5eD2lHxAIlOAE4u1MZ1Yyqn4.1hjk5FQxMVqvXdo//DGLu
-  api_key: foo
 
 two:
   name: Timmy

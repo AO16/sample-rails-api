@@ -1,2 +1,2 @@
-class Api::TweetsController < JSONAPI::ResourceController
+class Api::TweetsController < ApplicationController
 end
