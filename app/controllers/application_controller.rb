@@ -6,16 +6,16 @@ class ApplicationController < JSONAPI::ResourceController
   end
 
   def authenticate_request
-    @auth_header = request.headers['Authorization']
+    auth_header = request.headers['Authorization']
 
-    return not_authorized unless @auth_header
+    return not_authorized unless auth_header
 
-    @user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:email])
 
-    @authenticated = @user.authenticate(params['password'])
-    return not_authorized unless @authenticated
+    authenticated = user.authenticate(params['password'])
+    return not_authorized unless authenticated
 
-    @current_user = @auth_header.split(' ').last
-    not_authorized unless @current_user == @user.api_key
+    current_user = auth_header.split(' ').last
+    not_authorized unless current_user == user.api_key
   end
 end
