@@ -3,5 +3,6 @@ Rails.application.routes.draw do
     post '/users/login', to: 'users#login'
     resources :users
     resources :tweets
+    resources :follows
   end
 end
