@@ -1,10 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: Tommy
   email: t@gmail.com
 
 two:
+  id: 2
   name: Timmy
   email: tim@gmail.com
 

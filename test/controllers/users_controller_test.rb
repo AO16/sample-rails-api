@@ -80,4 +80,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 204
   end
+
+  test "timeline should include following tweets" do
+    user = users(:one)
+
+    get "/api/users/#{user.id}/timeline", {}, headers
+
+    body = JSON.parse response.body
+
+    assert_response :success
+    assert_equal 3, body["data"].size
+  end
 end
